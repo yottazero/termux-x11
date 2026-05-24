@@ -262,11 +262,11 @@ public class TouchInputHandler {
     }
 
     boolean isDexEvent(MotionEvent event) {
-        int SOURCE_DEX = InputDevice.SOURCE_MOUSE | InputDevice.SOURCE_TOUCHSCREEN;
-        return ((event.getSource() & SOURCE_DEX) == SOURCE_DEX)
-                && ((event.getSource() & InputDevice.SOURCE_TOUCHPAD) != InputDevice.SOURCE_TOUCHPAD)
-                && (event.getToolType(event.getActionIndex()) == MotionEvent.TOOL_TYPE_FINGER);
-    }
+    boolean isMouse = (event.getSource() & InputDevice.SOURCE_MOUSE) == InputDevice.SOURCE_MOUSE;
+    boolean isTouchpad = (event.getSource() & InputDevice.SOURCE_TOUCHPAD) == InputDevice.SOURCE_TOUCHPAD;
+
+    return isMouse && !isTouchpad;
+}
 
     public boolean handleTouchEvent(View view0, View view, MotionEvent event) {
         // Regular touchpads and Dex touchpad (in captured mode) send events as finger too,
